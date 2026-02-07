@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+/* Custom CSS Variables for Theme */
+:root {
+  /* Primary - Warm Orange */
+  --primary: 24 95% 53%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Secondary - Soft Coral */
+  --secondary: 15 90% 65%;
+  --secondary-foreground: 0 0% 100%;
+  
+  /* Accent - Warm Amber */
+  --accent: 38 92% 50%;
+  --accent-foreground: 0 0% 10%;
+  
+  /* Background */
+  --background: 30 40% 98%;
+  --foreground: 24 10% 10%;
+  
+  /* Card */
+  --card: 0 0% 100%;
+  --card-foreground: 24 10% 10%;
+  
+  /* Muted */
+  --muted: 30 20% 94%;
+  --muted-foreground: 24 10% 45%;
+  
+  /* Border */
+  --border: 30 20% 88%;
+  --input: 30 20% 88%;
+  --ring: 24 95% 53%;
+  
+  /* Status Colors */
+  --success: 142 76% 36%;
+  --warning: 38 92% 50%;
+  --error: 0 84% 60%;
+  
+  /* Radius */
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Primary */
+  --primary: 24 95% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Secondary */
+  --secondary: 15 70% 50%;
+  --secondary-foreground: 0 0% 100%;
+  
+  /* Accent */
+  --accent: 38 80% 55%;
+  --accent-foreground: 0 0% 10%;
+  
+  /* Background */
+  --background: 24 10% 10%;
+  --foreground: 30 40% 95%;
+  
+  /* Card */
+  --card: 24 10% 14%;
+  --card-foreground: 30 40% 95%;
+  
+  /* Muted */
+  --muted: 24 10% 20%;
+  --muted-foreground: 30 20% 60%;
+  
+  /* Border */
+  --border: 24 10% 25%;
+  --input: 24 10% 25%;
+  --ring: 24 95% 60%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Animation Keyframes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce-soft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Utility Animation Classes */
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 2s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--muted-foreground) / 0.1) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Glass Effect */
+.glass {
+  background: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Focus Ring */
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+}
+
+/* Card Hover Effect */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px hsl(var(--foreground) / 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Status Badge Colors */
+.badge-available {
+  background-color: hsl(var(--success) / 0.1);
+  color: hsl(var(--success));
+}
+
+.badge-pending {
+  background-color: hsl(var(--warning) / 0.1);
+  color: hsl(var(--warning));
+}
+
+.badge-adopted {
+  background-color: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
+}

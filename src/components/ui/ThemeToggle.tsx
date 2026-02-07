@@ -1,0 +1,57 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { Moon, Sun } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+export function ThemeToggle() {
+    const [isDark, setIsDark] = useState(false)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+        const stored = localStorage.getItem('theme')
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+        if (stored === 'dark' || (!stored && prefersDark)) {
+            setIsDark(true)
+            document.documentElement.classList.add('dark')
+        }
+    }, [])
+
+    const toggleTheme = () => {
+        setIsDark(!isDark)
+        if (!isDark) {
+            document.documentElement.classList.add('dark')
+            localStorage.setItem('theme', 'dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+            localStorage.setItem('theme', 'light')
+        }
+    }
+
+    if (!mounted) {
+        return (
+            <button className="p-2 rounded-lg hover:bg-[hsl(var(--muted))] transition-colors">
+                <div className="h-5 w-5" />
+            </button>
+        )
+    }
+
+    return (
+        <button
+            onClick={toggleTheme}
+            className={cn(
+                'p-2 rounded-lg hover:bg-[hsl(var(--muted))] transition-all duration-200',
+                'focus-ring'
+            )}
+            aria-label={isDark ? '切换至亮色模式' : '切换至暗色模式'}
+        >
+            {isDark ? (
+                <Sun className="h-5 w-5 text-[hsl(var(--foreground))]" />
+            ) : (
+                <Moon className="h-5 w-5 text-[hsl(var(--foreground))]" />
+            )}
+        </button>
+    )
+}
