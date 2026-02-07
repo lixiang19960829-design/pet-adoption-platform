@@ -45,7 +45,6 @@ export default function ManageApplicationsPage() {
                 .order('created_at', { ascending: false })
 
             if (!error && data) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 setApplications(data as (AdoptionApplication & { pet: Pet })[])
             }
             setIsLoading(false)

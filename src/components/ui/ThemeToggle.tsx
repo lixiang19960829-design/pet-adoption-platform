@@ -1,17 +1,25 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+// Client-side only check using useSyncExternalStore
+function useIsClient() {
+    return useSyncExternalStore(
+        () => () => { },
+        () => true,
+        () => false
+    )
+}
+
 export function ThemeToggle() {
+    const isClient = useIsClient()
     const [isDark, setIsDark] = useState(false)
-    const mounted = useRef(false)
-    const [isClient, setIsClient] = useState(false)
 
     useEffect(() => {
-        mounted.current = true
-        setIsClient(true)
+        if (!isClient) return
+
         const stored = localStorage.getItem('theme')
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
@@ -19,11 +27,12 @@ export function ThemeToggle() {
             setIsDark(true)
             document.documentElement.classList.add('dark')
         }
-    }, [])
+    }, [isClient])
 
     const toggleTheme = () => {
-        setIsDark(!isDark)
-        if (!isDark) {
+        const newIsDark = !isDark
+        setIsDark(newIsDark)
+        if (newIsDark) {
             document.documentElement.classList.add('dark')
             localStorage.setItem('theme', 'dark')
         } else {

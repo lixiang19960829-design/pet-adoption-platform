@@ -30,7 +30,6 @@ export default function FavoritesPage() {
                 .order('created_at', { ascending: false })
 
             if (!error && data) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 setFavorites(data as (Favorite & { pet: Pet })[])
             }
             setIsLoading(false)
