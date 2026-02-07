@@ -1,4 +1,6 @@
 import { notFound } from 'next/navigation'
+
+export const runtime = 'edge'
 import Link from 'next/link'
 import { ArrowLeft, MapPin, Calendar, Heart, Share2, MessageCircle, Check, AlertCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
