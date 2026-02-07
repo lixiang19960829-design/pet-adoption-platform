@@ -3,7 +3,6 @@
 import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Select } from '@/components/ui/Select'
-import { Input } from '@/components/ui/Input'
 import type { PetFilters } from '@/types'
 
 interface PetFiltersProps {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { PawPrint, Plus, Edit, Trash2, Eye, MoreVertical } from 'lucide-react'
+import { PawPrint, Plus, Edit, Trash2, Eye } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'

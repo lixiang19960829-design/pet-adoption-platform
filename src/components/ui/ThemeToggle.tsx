@@ -1,15 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export function ThemeToggle() {
     const [isDark, setIsDark] = useState(false)
-    const [mounted, setMounted] = useState(false)
+    const mounted = useRef(false)
+    const [isClient, setIsClient] = useState(false)
 
     useEffect(() => {
-        setMounted(true)
+        mounted.current = true
+        setIsClient(true)
         const stored = localStorage.getItem('theme')
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
@@ -30,7 +32,7 @@ export function ThemeToggle() {
         }
     }
 
-    if (!mounted) {
+    if (!isClient) {
         return (
             <button className="p-2 rounded-lg hover:bg-[hsl(var(--muted))] transition-colors">
                 <div className="h-5 w-5" />

@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Card, CardContent } from '@/components/ui/Card'
 import { getSpeciesLabel, getGenderLabel, getSizeLabel, getStatusLabel, formatDate } from '@/lib/utils'
-import type { Pet } from '@/types'
 import type { Metadata } from 'next'
 
 interface PageProps {

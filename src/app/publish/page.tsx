@@ -256,7 +256,7 @@ export default function PublishPage() {
                                     id="species"
                                     options={speciesOptions}
                                     value={formData.species}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, species: e.target.value as any }))}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, species: e.target.value as 'dog' | 'cat' | 'rabbit' | 'bird' | 'other' }))}
                                 />
                             </div>
                             <div className="grid sm:grid-cols-2 gap-4">
@@ -272,7 +272,7 @@ export default function PublishPage() {
                                     id="gender"
                                     options={genderOptions}
                                     value={formData.gender}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, gender: e.target.value as any }))}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, gender: e.target.value as 'male' | 'female' | 'unknown' }))}
                                 />
                             </div>
                             <div className="grid grid-cols-3 gap-4">
@@ -299,7 +299,7 @@ export default function PublishPage() {
                                     id="size"
                                     options={sizeOptions}
                                     value={formData.size || ''}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, size: e.target.value as any || null }))}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, size: (e.target.value as 'small' | 'medium' | 'large') || null }))}
                                 />
                             </div>
                             <div className="grid sm:grid-cols-2 gap-4">

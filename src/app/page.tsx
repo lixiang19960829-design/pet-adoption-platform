@@ -15,10 +15,6 @@ export default function HomePage() {
   const [filters, setFilters] = useState<PetFilters>({})
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchPets()
-  }, [filters])
-
   const fetchPets = async () => {
     setIsLoading(true)
 
@@ -51,6 +47,11 @@ export default function HomePage() {
     }
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    fetchPets()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters])
 
   const resetFilters = () => {
     setFilters({})

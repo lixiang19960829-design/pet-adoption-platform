@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ClipboardList, Clock, CheckCircle, XCircle, ChevronDown, User } from 'lucide-react'
+import { ClipboardList, Clock, CheckCircle, XCircle, ChevronDown } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
-import { formatRelativeTime, getSpeciesLabel } from '@/lib/utils'
+import { formatRelativeTime } from '@/lib/utils'
 import type { AdoptionApplication, Pet } from '@/types'
 
 export default function ManageApplicationsPage() {
@@ -45,7 +45,8 @@ export default function ManageApplicationsPage() {
                 .order('created_at', { ascending: false })
 
             if (!error && data) {
-                setApplications(data as any)
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                setApplications(data as (AdoptionApplication & { pet: Pet })[])
             }
             setIsLoading(false)
         }
