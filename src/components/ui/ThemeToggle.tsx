@@ -1,37 +1,32 @@
 'use client'
 
-import { useEffect, useState, useSyncExternalStore } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useSyncExternalStore, useCallback } from 'react'
 
-// Client-side only check using useSyncExternalStore
-function useIsClient() {
-    return useSyncExternalStore(
-        () => () => { },
-        () => true,
-        () => false
-    )
+// Subscribe to theme changes
+function subscribe(callback: () => void) {
+    const handler = () => callback()
+    window.addEventListener('storage', handler)
+    return () => window.removeEventListener('storage', handler)
+}
+
+function getSnapshot() {
+    if (typeof window === 'undefined') return false
+    const stored = localStorage.getItem('theme')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    return stored === 'dark' || (!stored && prefersDark)
+}
+
+function getServerSnapshot() {
+    return false
 }
 
 export function ThemeToggle() {
-    const isClient = useIsClient()
-    const [isDark, setIsDark] = useState(false)
+    const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
-    useEffect(() => {
-        if (!isClient) return
-
-        const stored = localStorage.getItem('theme')
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-
-        if (stored === 'dark' || (!stored && prefersDark)) {
-            setIsDark(true)
-            document.documentElement.classList.add('dark')
-        }
-    }, [isClient])
-
-    const toggleTheme = () => {
+    const toggleTheme = useCallback(() => {
         const newIsDark = !isDark
-        setIsDark(newIsDark)
         if (newIsDark) {
             document.documentElement.classList.add('dark')
             localStorage.setItem('theme', 'dark')
@@ -39,14 +34,17 @@ export function ThemeToggle() {
             document.documentElement.classList.remove('dark')
             localStorage.setItem('theme', 'light')
         }
-    }
+        // Trigger storage event for sync
+        window.dispatchEvent(new Event('storage'))
+    }, [isDark])
 
-    if (!isClient) {
-        return (
-            <button className="p-2 rounded-lg hover:bg-[hsl(var(--muted))] transition-colors">
-                <div className="h-5 w-5" />
-            </button>
-        )
+    // Apply theme class on mount
+    if (typeof window !== 'undefined') {
+        if (isDark) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
     }
 
     return (
