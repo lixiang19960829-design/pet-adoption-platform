@@ -54,7 +54,7 @@ export function Header() {
                                 <PawPrint className="h-6 w-6" />
                             </div>
                             <span className="text-xl font-bold gradient-text hidden sm:block">
-                                萌宠之家
+                                萌宠之家 🐾
                             </span>
                         </Link>
 
