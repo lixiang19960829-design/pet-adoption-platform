@@ -1,11 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { X, Mail, Lock, Loader2, Github } from 'lucide-react'
+import { X, Mail, Lock, Github } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { cn } from '@/lib/utils'
 
 interface LoginModalProps {
     isOpen: boolean
@@ -47,8 +46,12 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 if (error) throw error
                 onClose()
             }
-        } catch (err: any) {
-            setError(err.message === 'Invalid login credentials' ? '邮箱或密码错误' : err.message)
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message === 'Invalid login credentials' ? '邮箱或密码错误' : err.message)
+            } else {
+                setError('发生未知错误')
+            }
         } finally {
             setIsLoading(false)
         }
@@ -63,8 +66,12 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 },
             })
             if (error) throw error
-        } catch (err: any) {
-            setError(err.message)
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError('发生未知错误')
+            }
         }
     }
 
